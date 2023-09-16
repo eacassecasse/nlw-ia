@@ -1,0 +1,35 @@
+# @name get-all-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload-video
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+# @name create-transcription
+POST http://localhost:3333/videos/c190af43-49ab-498c-9956-677c5021b18b/transcription
+Content-Type: application/json
+
+{
+    "prompt": "falling in love"
+}
+
+###
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "d1618506-2bb6-477a-8e4c-b203d16017f2",
+    "temperature": 0.5,
+    "template": "Gere um resumo sucinto da transcrição do video informada a seguir: '''{transcription}'''"
+}
